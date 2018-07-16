@@ -1,0 +1,120 @@
+﻿@model MVCProject.Models.UserManagementViewModels
+@{
+    ViewBag.Title = "User Management";
+    //ViewBag.SubTitle = "List";
+}
+
+<div class="container">
+    @*<h2>Role Record</h2>*@
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Role</button><br /><br />
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    User Id
+                </th>
+                <th>
+                    User Name
+                </th>
+                <th>
+                    Password
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Role Name
+                </th>
+                <th>
+                    Reign Name
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody class="tbody"></tbody>
+    </table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dissmiss="modal"><span aria-hidden="true">×</span></button>*@
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title" id="myModalLabel">Add Role</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Html.HiddenFor(model => model.UId)
+                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <br />&nbsp;
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserPassword, "Password", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.PasswordFor(model => model.UserPassword, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.UserPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <br />&nbsp;
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserEmail, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.UserEmail, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <br />&nbsp;
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserRoleId, "User Role", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.UserRoleId, new SelectList(ViewBag.Uroles, "RoleId", "RoleName"), null, new { @class = "form-control" })
+                            @*@Html.DropDownListFor(m => m.UserRoleId, Model.UserRole)*@
+                            @*@Html.DropDownList("UserRoleId", null, htmlAttributes: new { @class = "form-control" })*@
+                            @Html.ValidationMessageFor(model => model.UserRoleId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <br />&nbsp;
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserReignsId, "User Reigns", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.UserReignsId, new SelectList(ViewBag.UReigns, "ReignsId", "Name"), null, new { @class = "form-control" })
+                            @*@Html.DropDownList("UserReignsId", null, htmlAttributes: new { @class = "form-control" })*@
+                            @Html.ValidationMessageFor(model => model.UserReignsId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <br />&nbsp;
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts
+{
+    <script src="~/Scripts/UserManagement/UserManagement.js"></script>
+}

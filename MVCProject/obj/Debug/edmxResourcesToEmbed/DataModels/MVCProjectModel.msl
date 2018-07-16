@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MVCProjectModelStoreContainer" CdmEntityContainer="MVCProjectEntities">
+    <EntitySetMapping Name="MenuMasters">
+      <EntityTypeMapping TypeName="MVCProjectModel.MenuMaster">
+        <MappingFragment StoreEntitySet="MenuMaster">
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+          <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+          <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+          <ScalarProperty Name="MenuParentId" ColumnName="MenuParentId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reigns">
+      <EntityTypeMapping TypeName="MVCProjectModel.Reign">
+        <MappingFragment StoreEntitySet="Reigns">
+          <ScalarProperty Name="ReignsId" ColumnName="ReignsId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleMenuMappings">
+      <EntityTypeMapping TypeName="MVCProjectModel.RoleMenuMapping">
+        <MappingFragment StoreEntitySet="RoleMenuMapping">
+          <ScalarProperty Name="RMId" ColumnName="RMId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserManagements">
+      <EntityTypeMapping TypeName="MVCProjectModel.UserManagement">
+        <MappingFragment StoreEntitySet="UserManagement">
+          <ScalarProperty Name="UId" ColumnName="UId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+          <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+          <ScalarProperty Name="UserReignsId" ColumnName="UserReignsId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CBY" ColumnName="CBY" />
+          <ScalarProperty Name="CDate" ColumnName="CDate" />
+          <ScalarProperty Name="MBY" ColumnName="MBY" />
+          <ScalarProperty Name="MDate" ColumnName="MDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="MVCProjectModel.UserRole">
+        <MappingFragment StoreEntitySet="UserRole">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

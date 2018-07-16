@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MVCProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MenuMaster">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuName" Type="nvarchar(max)" />
+          <Property Name="MenuUrl" Type="nvarchar(max)" />
+          <Property Name="MenuParentId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Reigns">
+          <Key>
+            <PropertyRef Name="ReignsId" />
+          </Key>
+          <Property Name="ReignsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="RoleMenuMapping">
+          <Key>
+            <PropertyRef Name="RMId" />
+          </Key>
+          <Property Name="RMId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="MenuId" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserManagement">
+          <Key>
+            <PropertyRef Name="UId" />
+          </Key>
+          <Property Name="UId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="UserPassword" Type="nvarchar(max)" />
+          <Property Name="UserEmail" Type="nvarchar(max)" />
+          <Property Name="UserRoleId" Type="int" Nullable="false" />
+          <Property Name="UserReignsId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CBY" Type="nvarchar(max)" />
+          <Property Name="CDate" Type="datetime" />
+          <Property Name="MBY" Type="nvarchar(max)" />
+          <Property Name="MDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Reigns">
+          <End Role="Reigns" Type="Self.Reigns" Multiplicity="1" />
+          <End Role="UserManagement" Type="Self.UserManagement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reigns">
+              <PropertyRef Name="ReignsId" />
+            </Principal>
+            <Dependent Role="UserManagement">
+              <PropertyRef Name="UserReignsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleMenu_Role">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="0..1" />
+          <End Role="RoleMenuMapping" Type="Self.RoleMenuMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="RoleMenuMapping">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
+          <End Role="UserManagement" Type="Self.UserManagement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserManagement">
+              <PropertyRef Name="UserRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVCProjectModelStoreContainer">
+          <EntitySet Name="MenuMaster" EntityType="Self.MenuMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reigns" EntityType="Self.Reigns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleMenuMapping" EntityType="Self.RoleMenuMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserManagement" EntityType="Self.UserManagement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Reigns" Association="Self.FK_Reigns">
+            <End Role="Reigns" EntitySet="Reigns" />
+            <End Role="UserManagement" EntitySet="UserManagement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleMenu_Role" Association="Self.FK_RoleMenu_Role">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="RoleMenuMapping" EntitySet="RoleMenuMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole" Association="Self.FK_UserRole">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="UserManagement" EntitySet="UserManagement" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MVCProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MenuMaster">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MenuUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MenuParentId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Reign">
+          <Key>
+            <PropertyRef Name="ReignsId" />
+          </Key>
+          <Property Name="ReignsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserManagements" Relationship="Self.FK_Reigns" FromRole="Reigns" ToRole="UserManagement" />
+        </EntityType>
+        <EntityType Name="RoleMenuMapping">
+          <Key>
+            <PropertyRef Name="RMId" />
+          </Key>
+          <Property Name="RMId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="MenuId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="UserRole" Relationship="MVCProjectModel.FK_RoleMenu_Role" FromRole="RoleMenuMapping" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserManagement">
+          <Key>
+            <PropertyRef Name="UId" />
+          </Key>
+          <Property Name="UId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserRoleId" Type="Int32" Nullable="false" />
+          <Property Name="UserReignsId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CBY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CDate" Type="DateTime" Precision="3" />
+          <Property Name="MBY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Reign" Relationship="Self.FK_Reigns" FromRole="UserManagement" ToRole="Reigns" />
+          <NavigationProperty Name="UserRole" Relationship="MVCProjectModel.FK_UserRole" FromRole="UserManagement" ToRole="UserRole" />
+        </EntityType>
+        <Association Name="FK_Reigns">
+          <End Role="Reigns" Type="Self.Reign" Multiplicity="1" />
+          <End Role="UserManagement" Type="Self.UserManagement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reigns">
+              <PropertyRef Name="ReignsId" />
+            </Principal>
+            <Dependent Role="UserManagement">
+              <PropertyRef Name="UserReignsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVCProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MenuMasters" EntityType="Self.MenuMaster" />
+          <EntitySet Name="Reigns" EntityType="Self.Reign" />
+          <EntitySet Name="RoleMenuMappings" EntityType="Self.RoleMenuMapping" />
+          <EntitySet Name="UserManagements" EntityType="Self.UserManagement" />
+          <AssociationSet Name="FK_Reigns" Association="Self.FK_Reigns">
+            <End Role="Reigns" EntitySet="Reigns" />
+            <End Role="UserManagement" EntitySet="UserManagements" />
+          </AssociationSet>
+          <EntitySet Name="UserRoles" EntityType="MVCProjectModel.UserRole" />
+          <AssociationSet Name="FK_RoleMenu_Role" Association="MVCProjectModel.FK_RoleMenu_Role">
+            <End Role="UserRole" EntitySet="UserRoles" />
+            <End Role="RoleMenuMapping" EntitySet="RoleMenuMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole" Association="MVCProjectModel.FK_UserRole">
+            <End Role="UserRole" EntitySet="UserRoles" />
+            <End Role="UserManagement" EntitySet="UserManagements" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RoleMenuMappings" Relationship="MVCProjectModel.FK_RoleMenu_Role" FromRole="UserRole" ToRole="RoleMenuMapping" />
+          <NavigationProperty Name="UserManagements" Relationship="MVCProjectModel.FK_UserRole" FromRole="UserRole" ToRole="UserManagement" />
+        </EntityType>
+        <Association Name="FK_RoleMenu_Role">
+          <End Type="MVCProjectModel.UserRole" Role="UserRole" Multiplicity="0..1" />
+          <End Type="MVCProjectModel.RoleMenuMapping" Role="RoleMenuMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="RoleMenuMapping">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole">
+          <End Type="MVCProjectModel.UserRole" Role="UserRole" Multiplicity="1" />
+          <End Type="MVCProjectModel.UserManagement" Role="UserManagement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserManagement">
+              <PropertyRef Name="UserRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MVCProjectModelStoreContainer" CdmEntityContainer="MVCProjectEntities">
+          <EntitySetMapping Name="MenuMasters">
+            <EntityTypeMapping TypeName="MVCProjectModel.MenuMaster">
+              <MappingFragment StoreEntitySet="MenuMaster">
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+                <ScalarProperty Name="MenuParentId" ColumnName="MenuParentId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reigns">
+            <EntityTypeMapping TypeName="MVCProjectModel.Reign">
+              <MappingFragment StoreEntitySet="Reigns">
+                <ScalarProperty Name="ReignsId" ColumnName="ReignsId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleMenuMappings">
+            <EntityTypeMapping TypeName="MVCProjectModel.RoleMenuMapping">
+              <MappingFragment StoreEntitySet="RoleMenuMapping">
+                <ScalarProperty Name="RMId" ColumnName="RMId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserManagements">
+            <EntityTypeMapping TypeName="MVCProjectModel.UserManagement">
+              <MappingFragment StoreEntitySet="UserManagement">
+                <ScalarProperty Name="UId" ColumnName="UId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+                <ScalarProperty Name="UserReignsId" ColumnName="UserReignsId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="CBY" ColumnName="CBY" />
+                <ScalarProperty Name="CDate" ColumnName="CDate" />
+                <ScalarProperty Name="MBY" ColumnName="MBY" />
+                <ScalarProperty Name="MDate" ColumnName="MDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="MVCProjectModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
